@@ -19,7 +19,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -Werror -Wconversion")
 
 include_directories(src/include)
 
-add_library(aoc-2022 STATIC src/include/aoc-2022.hpp src/include/outcome.hpp src/lib/aoc-2022.cpp)
+add_library(aoc-2022 STATIC src/include/aoc-2022.hpp src/lib/aoc-2022.cpp)
 
 add_executable(day1 src/day1/day1.cpp)
 
@@ -28,4 +28,8 @@ target_link_libraries(day1 PRIVATE aoc-2022 Boost::headers)
 add_executable(day2 src/day2/day2.cpp)
 
 target_link_libraries(day2 PRIVATE aoc-2022 Boost::headers)
+
+add_executable(day3 src/day3/day3.cpp)
+
+target_link_libraries(day3 PRIVATE aoc-2022 Boost::headers)
 

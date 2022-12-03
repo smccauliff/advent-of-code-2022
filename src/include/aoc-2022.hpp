@@ -25,7 +25,7 @@ namespace aoc2022::lib {
 #define THROW(...)  \
   {                   \
     std::stringstream err; \
-    aoc2022::lib::Log(err, __FILE_NAME__, __LINE__, __VA_ARGS__); \
+    aoc2022::lib::Log(err, __FILE_NAME__, ":", __LINE__, " ", __VA_ARGS__); \
     throw (err.str()); \
   }
 

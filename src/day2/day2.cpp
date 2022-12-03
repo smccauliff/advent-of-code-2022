@@ -1,7 +1,5 @@
 #include <aoc-2022.hpp>
-#include <outcome.hpp>
 #include <optional>
-#include <unordered_map>
 #include <string_view>
 
 const char kOpponentRock = 'A';
