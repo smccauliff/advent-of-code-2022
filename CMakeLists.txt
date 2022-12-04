@@ -2,6 +2,15 @@ cmake_minimum_required(VERSION 3.20)
 project(advent_of_code_2022)
 find_package(Boost)
 
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
 #The Boost C++ Libraries were successfully built!
 #
 #The following directory should be added to compiler include paths:
@@ -31,3 +40,15 @@ target_link_libraries(day3 PRIVATE aoc-2022 Boost::headers)
 
 add_executable(day4 src/day4/day4.cpp)
 target_link_libraries(day4 PRIVATE aoc-2022 Boost::headers)
+enable_testing()
+
+#Actually I'm just testing that I can get gtest to work
+add_executable(day4-unit-tests src/day4/day4-unit-tests.cpp)
+
+target_link_libraries(
+  day4-unit-tests
+  GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(day4-unit-tests)
