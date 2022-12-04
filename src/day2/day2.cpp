@@ -1,6 +1,7 @@
 #include <aoc-2022.hpp>
 #include <optional>
 #include <string_view>
+#include <iostream>
 
 const char kOpponentRock = 'A';
 const char kOpponentPaper = 'B';
