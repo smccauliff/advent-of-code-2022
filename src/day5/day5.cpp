@@ -43,8 +43,6 @@ struct CargoStacks {
       std::reverse(s.begin(), s.end());
     });
   }
-
-
 };
 
 
