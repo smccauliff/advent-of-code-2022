@@ -40,10 +40,15 @@ target_link_libraries(day3 PRIVATE aoc-2022 Boost::headers)
 
 add_executable(day4 src/day4/day4.cpp)
 target_link_libraries(day4 PRIVATE aoc-2022 Boost::headers)
+
+add_executable(day5 src/day5/day5.cpp)
+target_link_libraries(day5 PRIVATE aoc-2022 Boost::headers)
+
 enable_testing()
 
 #Actually I'm just testing that I can get gtest to work
 add_executable(day4-unit-tests src/day4/day4-unit-tests.cpp)
+
 
 target_link_libraries(
   day4-unit-tests
