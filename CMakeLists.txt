@@ -47,6 +47,8 @@ target_link_libraries(day5 PRIVATE aoc-2022 Boost::headers)
 add_executable(day6 src/day6/day6.cpp)
 target_link_libraries(day6 PRIVATE aoc-2022 Boost::headers)
 
+add_executable(day7 src/day7/day7.cpp)
+target_link_libraries(day7 PRIVATE aoc-2022 Boost::headers)
 
 enable_testing()
 
