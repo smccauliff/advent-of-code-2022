@@ -93,6 +93,7 @@ int main(int argc, char** argv) {
       }
     });
     std::cout << count << std::endl;
+    ALWAYS_ASSERT(count == 1325919);
 
     const int64_t target_size = 30000000-(70000000-root.recursive_size);
     int64_t closest_size = std::numeric_limits<int64_t>::max();
@@ -113,6 +114,7 @@ int main(int argc, char** argv) {
       }
     });
     std::cout << closest_dir_name << " " << closest_size << std::endl;
+    ALWAYS_ASSERT(closest_size == 2050735);
   } catch (const std::string& err) {
     std::cerr << err << std::endl;
     return 1;
