@@ -20,13 +20,13 @@ struct Dir {
   }
 };
 
-template<typename F, typename R>
-R DFS(Dir* dir, R init, F visit_function) {
+template<typename F>
+void DFS(Dir* dir,F visit_function) {
 
   for (auto& d : dir->dirs) {
-    init = DFS(d.second.get(), init, visit_function);
+    DFS(d.second.get(), visit_function);
   }
- return visit_function(dir, init);
+ return visit_function(dir);
 }
 
 int main(int argc, char** argv) {
@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
     Dir root{nullptr};
     Dir* pwd = &root;
     std::regex cd_regex{"cd (\\S+)"};
-    std::regex dir_regex{"dir (\\S})"};
+    std::regex dir_regex{"dir (\\S+)"};
     std::regex file_regex("(\\d+) (\\S+)");
     for (const auto& line : lines) {
       std::smatch m;
@@ -76,20 +76,43 @@ int main(int argc, char** argv) {
       }
     }
 
-    DFS(&root, static_cast<int64_t>(0), [](Dir* d, int64_t init) {
+    DFS(&root, [](Dir* d) {
       d->internal_size = std::accumulate(d->files.begin(), d->files.end(), static_cast<int64_t>(0), [](int64_t init, const auto& p) {
         return init + p.second;
       });
-      return init + d->internal_size;
+      d->recursive_size = std::accumulate(d->dirs.begin(), d->dirs.end(), d->internal_size, [](int64_t init, const auto& p) {
+        return init + p.second->recursive_size;
+      });
     });
 
-    auto rv = DFS(&root, static_cast<int64_t>(0), [](const Dir* d, auto init) {
-      if (d->recursive_size < 10'000) {
-        return d->recursive_size + init;
+
+    int64_t count = 0;
+    DFS(&root, [&count](const Dir* d) {
+      if (d->recursive_size < 100'000) {
+        count += d->recursive_size;
       }
-      return init;
     });
-    std::cout << rv << std::endl;
+    std::cout << count << std::endl;
+
+    const int64_t target_size = 30000000-(70000000-root.recursive_size);
+    int64_t closest_size = std::numeric_limits<int64_t>::max();
+    std::string closest_dir_name;
+    DFS(&root, [&closest_size, &closest_dir_name, target_size] (const Dir* d) {
+      if (closest_size > d->recursive_size && d->recursive_size >= target_size) {
+        closest_size = d->recursive_size;
+        if (d->IsRoot()) {
+          closest_dir_name = "/";
+        } else {
+          for (auto it = d->parent->dirs.begin(); it != d->parent->dirs.end(); ++it) {
+            if (it->second.get() == d) {
+              closest_dir_name = it->first;
+              break;
+            }
+          }
+        }
+      }
+    });
+    std::cout << closest_dir_name << " " << closest_size << std::endl;
   } catch (const std::string& err) {
     std::cerr << err << std::endl;
     return 1;
