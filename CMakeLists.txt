@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(advent_of_code_2022)
 find_package(Boost)
+find_package(Armadillo REQUIRED)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -50,14 +51,27 @@ target_link_libraries(day6 PRIVATE aoc-2022 Boost::headers)
 add_executable(day7 src/day7/day7.cpp)
 target_link_libraries(day7 PRIVATE aoc-2022 Boost::headers)
 
+add_library(forest-lib STATIC src/day8/forest-lib.hpp src/day8/forest-lib.cpp)
+target_link_libraries(forest-lib PUBLIC ${ARMADILLO_LIBRARIES})
+target_include_directories(forest-lib PUBLIC ${ARMADILLO_INCLUDE_DIRS})
+
+add_executable(day8 src/day8/forest-lib.hpp src/day8/day8.cpp)
+target_link_libraries(day8 PRIVATE aoc-2022 Boost::headers ${ARMADILLO_LIBRARIES} forest-lib)
+target_include_directories(day8 PRIVATE ${ARMADILLO_INCLUDE_DIRS})
+
 enable_testing()
 
 #Actually I'm just testing that I can get gtest to work
 add_executable(day4-unit-tests src/day4/day4-unit-tests.cpp)
-
-
 target_link_libraries(
   day4-unit-tests
+  GTest::gtest_main
+)
+
+add_executable(day8-unit-tests src/day8/day8-unit-tests.cpp)
+target_link_libraries(
+  day8-unit-tests
+  forest-lib
   GTest::gtest_main
 )
 
