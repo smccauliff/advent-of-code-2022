@@ -1,3 +1,3 @@
-#include <armadillo>
+#include <boost/numeric/ublas/matrix.hpp>
 
-int64_t CountVisibleTrees(const arma::Mat<char> forest);
+int64_t CountVisibleTrees(const boost::numeric::ublas::matrix<char>& forest);
