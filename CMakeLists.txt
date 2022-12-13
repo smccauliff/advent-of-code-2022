@@ -59,6 +59,9 @@ target_link_libraries(day8 PRIVATE aoc-2022 Boost::headers forest-lib)
 add_executable(day9 src/day9/day9.cpp)
 target_link_libraries(day9 PRIVATE aoc-2022 Boost::headers)
 
+add_executable(day10 src/day10/day10.cpp)
+target_link_libraries(day10 PRIVATE aoc-2022 Boost::headers)
+
 enable_testing()
 
 #Actually I'm just testing that I can get gtest to work
