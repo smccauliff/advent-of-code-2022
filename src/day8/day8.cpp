@@ -23,6 +23,12 @@ int main(int argc, char** argv) {
     auto visible_trees = CountVisibleTrees(forest);
     visible_trees += forest.size1() * 2 + forest.size2() * 2 - 4;
     std::cout << visible_trees << std::endl;
+
+    auto sceneic_score = MaxScenicScore(forest);
+    std::cout << sceneic_score << std::endl;
+
+    ALWAYS_ASSERT(visible_trees == 1698);
+    ALWAYS_ASSERT(sceneic_score == 672280);
   } catch (const std::string& err) {
     std::cerr << err << std::endl;
     return 1;

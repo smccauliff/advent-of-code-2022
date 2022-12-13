@@ -53,3 +53,46 @@ TEST_F(ScanTest, NothingFound) {
   matrix<char> m0 = Parse(init);
   ASSERT_EQ(0, CountVisibleTrees(m0));
 }
+
+TEST_F(ScanTest, BoxedInSceneicScore) {
+  auto init = "[3,3]((0, 4, 2),(5, 4, 6),(6, 7, 8))";
+
+  matrix<char> m0 = Parse(init);
+  ASSERT_EQ(1, MaxScenicScore(m0));
+}
+
+TEST_F(ScanTest,UpSceneicScore) {
+  auto init = "[3,3]((0, 2, 2),(5, 4, 6),(6, 7, 8))";
+
+  matrix<char> m0 = Parse(init);
+  ASSERT_EQ(2, MaxScenicScore(m0));
+}
+
+TEST_F(ScanTest, DownSceneicScore) {
+  auto init = "[3,3]((0, 5, 2),(5, 4, 6),(6, 0, 8))";
+
+  matrix<char> m0 = Parse(init);
+  ASSERT_EQ(2, MaxScenicScore(m0));
+}
+
+
+TEST_F(ScanTest, LeftSceneicScore) {
+  auto init = "[3,3]((0, 5, 2),(5, 4, 0),(6, 9, 8))";
+
+  matrix<char> m0 = Parse(init);
+  ASSERT_EQ(2, MaxScenicScore(m0));
+}
+
+TEST_F(ScanTest, RightSceneicScore) {
+  auto init = "[3,3]((0, 5, 2),(0, 4, 6),(6, 9, 8))";
+
+  matrix<char> m0 = Parse(init);
+  ASSERT_EQ(2, MaxScenicScore(m0));
+}
+
+TEST_F(ScanTest, MulipleRowsBlockedInMiddle) {
+   auto init = "[4,3]((0, 5, 2),(8, 5, 6),(8, 4, 7), (6, 9, 8))";
+
+  matrix<char> m0 = Parse(init);
+  ASSERT_EQ(2, MaxScenicScore(m0));
+}
